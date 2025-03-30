@@ -11,4 +11,5 @@ class Blacklist(db.Model):
     app_id = Column(String(50),  nullable=False)
     email = Column(String(100), nullable=False)
     reason = Column(String(100), nullable=False)
-
+    ip_address = db.Column(db.String(100), nullable=False)
+    timestamp = db.Column(db.DateTime, nullable=False)

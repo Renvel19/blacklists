@@ -48,11 +48,47 @@ def get_route(email):
     }), 200
 
 
-
-
-
 @blacklist_blueprint.route("/blacklists/token", methods=["GET"])
 def get_token():
     access_token = create_access_token(identity="1")
 
     return jsonify({'token': access_token}), 200
+
+@blacklist_blueprint.route("/blacklists", methods=["POST"])
+@jwt_required()
+def add_to_blacklist():
+    data = request.get_json()
+
+    if not data or "email" not in data or "app_uuid" not in data:
+        return jsonify({'message': 'Faltan campos obligatorios'}), 400
+
+    email = data.get("email")
+    app_uuid = data.get("app_uuid")
+    reason = data.get("blocked_reason", "")
+
+    if not re.match(EMAIL_REGEX, email):
+        return jsonify({'message': 'Formato de correo electrónico inválido'}), 400
+
+    if not is_valid_uuid(app_uuid):
+        return jsonify({'message': 'UUID de la app inválido'}), 400
+
+    if len(reason) > 255:
+        return jsonify({'message': 'El motivo no puede exceder 255 caracteres'}), 400
+
+    ip_address = request.remote_addr or request.headers.get('X-Forwarded-For', 'Unknown')
+
+    new_entry = Blacklist(
+        email=email,
+        app_id=app_uuid,
+        reason=reason,
+        ip_address=ip_address,
+        timestamp=datetime.now(timezone.utc)
+    )
+
+    try:
+        db.session.add(new_entry)
+        db.session.commit()
+        return jsonify({'message': 'Email agregado a la lista negra exitosamente'}), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'message': 'Error al guardar en la base de datos', 'error': str(e)}), 500

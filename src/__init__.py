@@ -8,7 +8,7 @@ from src.db import db, reset_database
 from src.config import Config
 from src.blueprints.blacklist import blacklist_blueprint
 from src.models.blacklist import Blacklist
-
+from datetime import datetime, timezone
 
 def create_app():
     app = Flask(__name__)
@@ -27,19 +27,25 @@ def create_app():
             id=str(uuid.uuid4()),
             app_id=str(uuid.uuid4()),
             email='test1@test.co',
-            reason='Es molesto'
+            reason='Es molesto',
+            ip_address="127.0.0.1",
+            timestamp=datetime.now(timezone.utc)
         )
         blacklist2 = Blacklist(
             id=str(uuid.uuid4()),
             app_id=str(uuid.uuid4()),
             email='test1@test.co',
-            reason='Es molesto'
+            reason='Es molesto',
+            ip_address="127.0.0.1",
+            timestamp=datetime.now(timezone.utc)
         )
         blacklist3 = Blacklist(
             id=str(uuid.uuid4()),
             app_id=str(uuid.uuid4()),
             email='test2@test.co',
-            reason='Es molesto'
+            reason='Es molesto',
+            ip_address="127.0.0.1",
+            timestamp=datetime.now(timezone.utc)
         )
 
         db.session.add(blacklist1)
