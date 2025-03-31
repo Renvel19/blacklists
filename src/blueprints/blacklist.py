@@ -35,7 +35,8 @@ def get_route(email):
     if not blacklists:
         return jsonify({
             'message': 'El usuario no está bloqueado',
-            'isBlocked': False
+            'isBlocked': False,
+            'reasons': []
         }), 200
 
     reasons = [{
@@ -43,6 +44,7 @@ def get_route(email):
 
         } for blacklist in blacklists]
     return jsonify({
+        'message': 'El usuario está bloqueado',
         'isBlocked': True,
         'reasons': reasons
     }), 200
