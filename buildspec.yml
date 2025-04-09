@@ -1,0 +1,22 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo "Instalando dependencias..."
+      - pip install --upgrade pip
+      - pip install -r requirements.txt
+
+  pre_build:
+    commands:
+      - echo "Ejecutando pruebas unitarias..."
+      - pytest --maxfail=1 --disable-warnings -v
+
+  build:
+    commands:
+      - echo "Empaquetando la aplicación..."
+      - zip -r artifact.zip application.py src/ tests/ requirements.txt .flaskenv
+
+artifacts:
+  files:
+    - artifact.zip
