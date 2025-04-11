@@ -4,6 +4,7 @@ env:
   variables:
     DATABASE_URI: "sqlite:///:memory:"
     JWT_SECRET_KEY: "clave-secreta"
+    PYTHONPATH: "."
 
 phases:
   install:
