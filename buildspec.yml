@@ -1,5 +1,10 @@
 version: 0.2
 
+env:
+  variables:
+    DATABASE_URI: "sqlite:///:memory:"
+    JWT_SECRET_KEY: "clave-secreta"
+
 phases:
   install:
     commands:
