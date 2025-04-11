@@ -11,7 +11,8 @@ phases:
     commands:
       - echo "Version..."
       - python --version
-      - echo "Validando pruebas unitarias..."
+      - echo "Versiones libs"
+      - pip list
       - python -m pytest tests
       - echo "Ejecutando pruebas unitarias..."
       - pytest --maxfail=1 --disable-warnings -v
