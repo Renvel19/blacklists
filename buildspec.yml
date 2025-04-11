@@ -10,6 +10,7 @@ phases:
   pre_build:
     commands:
       - echo "Ejecutando pruebas unitarias..."
+      - python --version
       - pytest --maxfail=1 --disable-warnings -v
 
   build:
