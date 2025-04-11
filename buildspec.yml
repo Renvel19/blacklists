@@ -15,14 +15,12 @@ phases:
 
   pre_build:
     commands:
-      - echo "Version..."
-      - python --version
-      - echo "Versiones libs"
-      - pip list
-      - cd $CODEBUILD_SRC_DIR/..
-      - python -m pytest tests
-      - echo "Ejecutando pruebas unitarias..."
-      - pytest --maxfail=1 --disable-warnings -v
+      - echo "Mostrando directorio actual:"
+      - pwd
+      - echo "Contenido (ls -R):"
+      - ls -R
+      - echo "Ejecutando pruebas unitarias (antes, python -m pytest tests):"
+      - python -m pytest tests --maxfail=1 --disable-warnings -v
 
   build:
     commands:
