@@ -19,6 +19,7 @@ phases:
       - python --version
       - echo "Versiones libs"
       - pip list
+      - cd $CODEBUILD_SRC_DIR/..
       - python -m pytest tests
       - echo "Ejecutando pruebas unitarias..."
       - pytest --maxfail=1 --disable-warnings -v
