@@ -124,7 +124,7 @@ def test_post_blacklist_db_error(client):
         "blocked_reason": "Simular fallo en DB"
     }
 
-    with patch("src.db.db.session.commit") as mock_commit:
+    with patch("src.blueprints.blacklist.db.session.commit") as mock_commit:
         mock_commit.side_effect = Exception("Simulando error de base de datos")
 
         response = client.post(
