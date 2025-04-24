@@ -18,12 +18,8 @@ phases:
 
   build:
     commands:
-      - zip -r artifact.zip \
-          application.py \
-          src/ \
-          requirements.txt \
-          Procfile \
-          .flaskenv
+      - echo "Empaquetando aplicación..."
+      - zip -r artifact.zip application.py src requirements.txt Procfile .flaskenv
 
 artifacts:
   files:
