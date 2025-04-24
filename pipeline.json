@@ -1,0 +1,60 @@
+{
+  "pipeline": {
+    "name": "BlacklistCI",
+    "roleArn": "arn:aws:iam::463470985984:role/CodePipelineServiceRole",
+    "artifactStore": {
+      "type": "S3",
+      "location": "despliegues-devops"
+    },
+    "stages": [
+      {
+        "name": "Source",
+        "actions": [
+          {
+            "name": "GitHubSource",
+            "actionTypeId": {
+              "category": "Source",
+              "owner": "AWS",
+              "provider": "CodeStarSourceConnection",
+              "version": "1"
+            },
+            "configuration": {
+              "ConnectionArn": "arn:aws:codeconnections:us-east-1:463470985984:connection/7f8e64eb-2a25-411a-99aa-898b02f255a7",
+              "FullRepositoryId": "Renvel19/blacklists",
+              "BranchName": "master"
+            },
+            "outputArtifacts": [
+              { "name": "SourceArtifact" }
+            ],
+            "runOrder": 1
+          }
+        ]
+      },
+      {
+        "name": "Build",
+        "actions": [
+          {
+            "name": "BuildAction",
+            "actionTypeId": {
+              "category": "Build",
+              "owner": "AWS",
+              "provider": "CodeBuild",
+              "version": "1"
+            },
+            "configuration": {
+              "ProjectName": "BlacklistCI"
+            },
+            "inputArtifacts": [
+              { "name": "SourceArtifact" }
+            ],
+            "outputArtifacts": [
+              { "name": "BuildArtifact" }
+            ],
+            "runOrder": 1
+          }
+        ]
+      }
+    ],
+    "version": 1
+  }
+}
