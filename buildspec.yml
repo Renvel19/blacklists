@@ -8,6 +8,8 @@ env:
 
 phases:
   install:
+    runtime-versions:
+      python: 3.10
     commands:
       - pip install --upgrade pip
       - pip install -r requirements.txt
