@@ -8,23 +8,25 @@ env:
 
 phases:
   install:
-    runtime-versions:
-      python: 3.10
     commands:
+      - echo "Instalando dependencias..."
       - pip install --upgrade pip
       - pip install -r requirements.txt
 
   pre_build:
     commands:
+      - echo "Mostrando directorio actual:"
+      - pwd
+      - echo "Contenido (ls -R):"
+      - ls -R
+      - echo "Ejecutando pruebas unitarias (antes, python -m pytest tests):"
       - python -m pytest tests --maxfail=1 --disable-warnings -v
 
   build:
     commands:
-      - echo "Empaquetando aplicación..."
-      - zip -r artifact.zip application.py src requirements.txt Procfile .flaskenv
+      - echo "Empaquetando la aplicación..."
+      - zip -r artifact.zip application.py src/ requirements.txt
 
 artifacts:
   files:
     - artifact.zip
-
-
