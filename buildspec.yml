@@ -21,12 +21,29 @@ phases:
       - ls -R
       - echo "Ejecutando pruebas unitarias (antes, python -m pytest tests):"
       - python -m pytest tests --maxfail=1 --disable-warnings -v
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 463470985984.dkr.ecr.us-east-1.amazonaws.com
 
   build:
     commands:
       - echo "Empaquetando la aplicación..."
-      - zip -r artifact.zip application.py src/ tests/ requirements.txt .flaskenv
+      - docker build -t blacklists .
+      - docker tag blacklists:latest 463470985984.dkr.ecr.us-east-1.amazonaws.com/blacklists:latest
+
+  post-build:
+    commands:
+      - echo "Pushing docker..."
+      - docker push 463470985984.dkr.ecr.us-east-1.amazonaws.com/blacklists:latest
 
 artifacts:
   files:
-    - artifact.zip
+    - '**/*'
+    - imagedefinitions.json
+    - imageDetail.json
+  secondary-artifacts:
+    DefinitionArtifact:
+      files:
+        - appspec.yaml
+        - taskdef.json
+    ImageArtifact:
+      files:
+        - imageDetail.json
