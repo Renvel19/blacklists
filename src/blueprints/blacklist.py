@@ -94,3 +94,7 @@ def add_to_blacklist():
     except Exception as e:
         db.session.rollback()
         return jsonify({'message': 'Error al guardar en la base de datos', 'error': str(e)}), 500
+
+@blacklist_blueprint.route("/health")
+def health():
+    return {"status": "ok"}, 200
