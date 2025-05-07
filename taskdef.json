@@ -1,0 +1,31 @@
+{
+  "family": "blacklists-task",
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "cpu": "256",
+  "memory": "512",
+  "networkMode": "awsvpc",
+  "executionRoleArn": "arn:aws:iam::463470985984:role/ecsTaskExecutionRole",
+  "containerDefinitions": [
+    {
+      "name": "blacklists-container",
+      "image": "463470985984.dkr.ecr.us-east-1.amazonaws.com/blacklists:latest",
+      "portMappings": [
+        {
+          "containerPort": 5000,
+          "protocol": "tcp"
+        }
+      ],
+      "environment": [
+        { "name": "DB_HOST",       "value": "my-blacklist-db.cy9comua4vhw.us-east-1.rds.amazonaws.com" },
+        { "name": "DB_NAME",       "value": "blacklist_db" },
+        { "name": "DB_USER",       "value": "postgres" },
+        { "name": "DB_PASS",       "value": "postgres" },
+        { "name": "DB_PORT",       "value": "5432" },
+        { "name": "DATABASE_URI",  "value": "postgresql://postgres:postgres@my-blacklist-db.cy9comua4vhw.us-east-1.rds.amazonaws.com:5432/blacklist_db" },
+        { "name": "JWT_SECRET_KEY","value": "clave-secreta" }
+      ]
+    }
+  ]
+}
