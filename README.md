@@ -1,5 +1,3 @@
-# Entrega 1  
-**Despliegue Manual de un Microservicio sobre un Servicio PaaS**  
 **Universidad de los Andes**  
 **DevOps: Agilizando el Despliegue Continuo de Aplicaciones**  
 
