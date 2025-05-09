@@ -29,10 +29,11 @@ phases:
       - docker build -t blacklists .
       - docker tag blacklists:latest 463470985984.dkr.ecr.us-east-1.amazonaws.com/blacklists:latest
 
-  post-build:
+  post_build:
     commands:
       - echo "Pushing docker..."
       - docker push 463470985984.dkr.ecr.us-east-1.amazonaws.com/blacklists:latest
+      - printf '{"ImageURI":"%s"}' 463470985984.dkr.ecr.us-east-1.amazonaws.com/blacklists:latest > imageDetail.json
 
 artifacts:
   files:
