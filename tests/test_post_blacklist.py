@@ -32,7 +32,7 @@ def test_post_blacklist_success(client):
     payload = {
         "email": "ejemplo@correo.com",
         "app_uuid": "a8eab7b6-6e9a-4e7d-ae5a-df6a3b4191a7",
-        "blocked_reason": "Razón de prueba"
+        "blocked_reason": "Razón de prueba 2"
     }
 
     response = client.post(
